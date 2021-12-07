@@ -8,7 +8,7 @@ export const insertNewData = (branch: string, machine: string, year: string, mon
         ON DUPLICATE KEY UPDATE counter_time = '${clockCounter}', used_time = '${usedMonthCounter}'`
         poolConnection.query(SQL_STATEMENT_INSERT_NEW_DATA, (err, result) => {
             if (err) {
-                loggerError.error(`${Date.now()}: failed  to insert a new row data ${err}`)
+                loggerError.error(`${Date.now()}: failed to insert a new row data ${err}`)
                 reject(err)
             }
             else {
