@@ -4,7 +4,7 @@ import * as config from '../config.json'
 import { loggerInfo, loggerError } from './utils/logger'
 import { insertNewRow, updateSwitchingTime } from './routes/insert'
 import { deleteTimeDetail, deleteSwitchTime } from './routes/delete'
-import { getSpecificRow, showYearAverage, showYearDetails } from './routes/select'
+import { getSpecificRow, showYearAverage, showYearDetails, getSpecificSwitchTime } from './routes/select'
 
 
 const app = express();
@@ -72,6 +72,16 @@ app.post('/showBulbsData', async (req, res) => {
         res.send(result)
     } catch (err) {
         loggerError.error(`${Date.now()}: failed to show details of year in /showBulbsData route. ${err}`)
+    }
+})
+
+app.post('/getHours', async (req, res) => {
+    try {
+        const { branch, machine } = req.body
+        const result = await getSpecificSwitchTime(branch, machine)
+        res.send(result)
+    } catch (err) {
+        loggerError.error(`${Date.now()}: failed to show details of specific switch time in /getHours route. ${err}`)
     }
 })
 

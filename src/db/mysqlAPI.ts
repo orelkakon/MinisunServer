@@ -86,6 +86,27 @@ export const selectSpecificData = (branch: string, machine: string, year: string
     })
 }
 
+
+export const selectSwitchTime = (branch: string, machine: string) => {
+    return new Promise((resolve, reject) => {
+        const SQL_STATEMENT_GET_SPECIFIC_SWITCH_TIME = `SELECT year, month FROM switch_times WHERE (branch = '${branch}' AND machine = '${machine}')`
+        poolConnection.query(SQL_STATEMENT_GET_SPECIFIC_SWITCH_TIME, (err, result) => {
+            if (err) {
+                loggerError.error(`${Date.now()}: to get specific switch timw data. ${err}`)
+                reject(err)
+            }
+            else {
+                if (result) {
+                    loggerInfo.info('Success to get specific switch timw data')
+                    resolve(result[0])
+                } else {
+                    resolve('failed')
+                }
+            }
+        })
+    })
+}
+
 export const deleteRowData = (branch: string, machine: string, year: string, month: string) => {
     return new Promise((resolve, reject) => {
         const SQL_STATEMENT_DELETE_ROW_DATA = `DELETE FROM time_details WHERE WHERE (branch = '${branch}' AND machine = '${machine}' AND year = '${year}' AND month='${month}')`

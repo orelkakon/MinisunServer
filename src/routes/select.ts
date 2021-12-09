@@ -1,4 +1,4 @@
-import { selectSpecificData, selectYearData } from './../db/mysqlAPI'
+import { selectSpecificData, selectYearData, selectSwitchTime } from './../db/mysqlAPI'
 import { calculateAvg } from './../utils/calculateAvg'
 
 export const showYearDetails = async (branch: string, machine: string, year: string) => {
@@ -14,3 +14,9 @@ export const showYearAverage = async (branch: string, machine: string, year: str
 export const getSpecificRow = async (branch: string, machine: string, year: string, month: string) => {
     return await selectSpecificData(branch, machine, year, month)
 }
+
+
+export const getSpecificSwitchTime = async (branch: string, machine: string) => {
+    return await selectSwitchTime(branch, machine)
+}
+
