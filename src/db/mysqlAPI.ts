@@ -86,6 +86,25 @@ export const selectSpecificData = (branch: string, machine: string, year: string
     })
 }
 
+export const selectMaxCounterTime = () => {
+    return new Promise((resolve, reject) => {
+        const SQL_STATEMENT_GET_MAX_COUNTER_TIME = `SELECT max(counter_time) as counter_time FROM time_details;`
+        poolConnection.query(SQL_STATEMENT_GET_MAX_COUNTER_TIME, (err, result) => {
+            if (err) {
+                loggerError.error(`${Date.now()}: to get specific max time data. ${err}`)
+                reject(err)
+            }
+            else {
+                if (result) {
+                    loggerInfo.info('Success to get specific max time data')
+                    resolve(result[0])
+                } else {
+                    resolve('failed')
+                }
+            }
+        })
+    })
+}
 
 export const selectSwitchTime = (branch: string, machine: string) => {
     return new Promise((resolve, reject) => {
@@ -109,7 +128,7 @@ export const selectSwitchTime = (branch: string, machine: string) => {
 
 export const deleteRowData = (branch: string, machine: string, year: string, month: string) => {
     return new Promise((resolve, reject) => {
-        const SQL_STATEMENT_DELETE_ROW_DATA = `DELETE FROM time_details WHERE WHERE (branch = '${branch}' AND machine = '${machine}' AND year = '${year}' AND month='${month}')`
+        const SQL_STATEMENT_DELETE_ROW_DATA = `DELETE FROM time_details WHERE (branch = '${branch}' AND machine = '${machine}' AND year = '${year}' AND month='${month}')`
         poolConnection.query(SQL_STATEMENT_DELETE_ROW_DATA, (err, result) => {
             if (err) {
                 loggerError.error(`${Date.now()}: failed to delete a row data ${err}`)
@@ -128,9 +147,9 @@ export const deleteRowData = (branch: string, machine: string, year: string, mon
     })
 }
 
-export const deleteSwitchTimeData = (branch: string, machine: string, year: string, month: string) => {
+export const deleteSwitchTimeData = (branch: string, machine: string) => {
     return new Promise((resolve, reject) => {
-        const SQL_STATEMENT_DELETE_SWITCH_TIME_DATA = `DELETE FROM switch_time WHERE WHERE (branch = '${branch}' AND machine = '${machine}' AND year = '${year}' AND month='${month}')`
+        const SQL_STATEMENT_DELETE_SWITCH_TIME_DATA = `DELETE FROM switch_times WHERE (branch = '${branch}' AND machine = '${machine}')`
         poolConnection.query(SQL_STATEMENT_DELETE_SWITCH_TIME_DATA, (err, result) => {
             if (err) {
                 loggerError.error(`${Date.now()}: failed to delete a switch time data ${err}`)

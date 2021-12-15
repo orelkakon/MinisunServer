@@ -1,4 +1,4 @@
-import { selectSpecificData, selectYearData, selectSwitchTime } from './../db/mysqlAPI'
+import { selectSpecificData, selectYearData, selectSwitchTime, selectMaxCounterTime } from './../db/mysqlAPI'
 import { calculateAvg } from './../utils/calculateAvg'
 
 export const showYearDetails = async (branch: string, machine: string, year: string) => {
@@ -20,3 +20,7 @@ export const getSpecificSwitchTime = async (branch: string, machine: string) => 
     return await selectSwitchTime(branch, machine)
 }
 
+
+export const getMaxCounter = async () => {
+    return await selectMaxCounterTime()
+}

@@ -4,7 +4,7 @@ import * as config from '../config.json'
 import { loggerInfo, loggerError } from './utils/logger'
 import { insertNewRow, updateSwitchingTime } from './routes/insert'
 import { deleteTimeDetail, deleteSwitchTime } from './routes/delete'
-import { getSpecificRow, showYearAverage, showYearDetails, getSpecificSwitchTime } from './routes/select'
+import { getSpecificRow, showYearAverage, showYearDetails, getSpecificSwitchTime, getMaxCounter } from './routes/select'
 
 
 const app = express();
@@ -47,8 +47,8 @@ app.post('/deleteBulbsData', async (req, res) => {
 
 app.post('/deleteSwitchTimeData', async (req, res) => {
     try {
-        const { branch, machine, year, month } = req.body
-        const result = await deleteSwitchTime(branch, machine, year, month)
+        const { branch, machine} = req.body
+        const result = await deleteSwitchTime(branch, machine)
         res.send(result)
     } catch (err) {
         loggerError.error(`${Date.now()}: failed to delete switch time data in /deleteSwitchTimeData route. ${err}`)
@@ -104,6 +104,17 @@ app.post('/getSpecificClockCounter', async (req, res) => {
         loggerError.error(`${Date.now()}: failed to show specific row data in /getSpecificClockCounter route. ${err}`)
     }
 })
+
+
+app.post('/getMaxCounter', async (req, res) => {
+    try {
+        const result = await getMaxCounter()
+        res.send(result)
+    } catch (err) {
+        loggerError.error(`${Date.now()}: failed to get max data in /getMaxCounter route. ${err}`)
+    }
+})
+
 
 // server
 app.listen(config.port, () => {
