@@ -21,6 +21,6 @@ export const getSpecificSwitchTime = async (branch: string, machine: string) => 
 }
 
 
-export const getMaxCounter = async () => {
-    return await selectMaxCounterTime()
+export const getMaxCounter = async (branch, machine) => {
+    return await selectMaxCounterTime(branch, machine)
 }

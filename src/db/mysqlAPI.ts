@@ -86,9 +86,9 @@ export const selectSpecificData = (branch: string, machine: string, year: string
     })
 }
 
-export const selectMaxCounterTime = () => {
+export const selectMaxCounterTime = (branch, machine) => {
     return new Promise((resolve, reject) => {
-        const SQL_STATEMENT_GET_MAX_COUNTER_TIME = `SELECT max(counter_time) as counter_time FROM time_details;`
+        const SQL_STATEMENT_GET_MAX_COUNTER_TIME = `SELECT max(counter_time) as counter_time FROM time_details WHERE (branch = '${branch}' AND machine = '${machine}');`
         poolConnection.query(SQL_STATEMENT_GET_MAX_COUNTER_TIME, (err, result) => {
             if (err) {
                 loggerError.error(`${Date.now()}: to get specific max time data. ${err}`)

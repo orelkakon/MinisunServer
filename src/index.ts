@@ -108,7 +108,8 @@ app.post('/getSpecificClockCounter', async (req, res) => {
 
 app.post('/getMaxCounter', async (req, res) => {
     try {
-        const result = await getMaxCounter()
+        const { branch, machine } = req.body
+        const result = await getMaxCounter(branch, machine)
         res.send(result)
     } catch (err) {
         loggerError.error(`${Date.now()}: failed to get max data in /getMaxCounter route. ${err}`)
